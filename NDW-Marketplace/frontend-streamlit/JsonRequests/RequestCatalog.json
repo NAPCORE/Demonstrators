@@ -1,0 +1,19 @@
+{
+    "@context": {
+        "edc": "https://w3id.org/edc/v0.0.1/ns/",
+        "odrl": "http://www.w3.org/ns/odrl/2/",
+        "dct": "https://purl.org/dc/terms/"
+    },
+    "@type": "edc:CatalogRequest",
+    "counterPartyAddress": "{{providerUrl}}/api/v1/dsp",
+    "protocol": "dataspace-protocol-http",
+    "querySpec": {
+        "filterExpression": [
+            {
+                "operandLeft": "https://w3id.org/edc/v0.0.1/ns/id",
+                "operator": "=",
+                "operandRight": "{{assetId}}"
+            }
+        ]
+    }
+}

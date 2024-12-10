@@ -1,0 +1,44 @@
+ingress:
+  web:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: addon-http-application-routing
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - name: "airflow.d37c3234d8454420babf.westeurope.aksapp.io"
+        tls:
+          enabled: true
+          secretName: airflow-tls
+
+webserverSecretKey: c79852f6814b404804d859a71844c282
+
+dags:
+  gitSync:
+    enabled: true
+    repo: <change me to dag git repo>
+    branch: main
+    rev: HEAD
+    # Dags in root directory
+    subPath: "/dags"
+    period: "1m"
+    credentialsSecret: airflow-secret
+    env:
+      - name: "GITSYNC_VERBOSE"
+        value: "9"
+
+workers:
+  extraVolumeMounts:
+    - name: moblithek-cert
+      mountPath: /opt/airflow/secrets/moblithek
+      readOnly: true
+
+  extraVolumes:
+    ## spec for Volume: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#volume-v1-core
+    - name: moblithek-cert
+      secret:
+        secretName: moblithek-cert
+
+images:
+    airflow:
+        repository: napcoredataspace.azurecr.io/custom-airflow
+        tag: latest

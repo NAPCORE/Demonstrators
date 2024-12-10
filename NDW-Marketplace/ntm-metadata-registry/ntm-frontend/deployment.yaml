@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ntm-frontend
+  labels:
+    app: ntm-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ntm-frontend
+  template:
+    metadata:
+      labels:
+        app: ntm-frontend
+    spec:
+      containers:
+      - name: ntm-frontend
+        image: napcoredataspace.azurecr.io/ntm-frontend:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d
+          name: nginx-conf
+      volumes:
+      - name: nginx-conf
+        configMap: 
+          name: frontend-nging-config
+          items:
+            - key: nginx.conf
+              path: default.conf
+

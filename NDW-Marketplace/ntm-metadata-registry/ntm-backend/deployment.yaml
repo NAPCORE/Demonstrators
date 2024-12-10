@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ntm-backend
+  labels:
+    app: ntm-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ntm-backend
+  template:
+    metadata:
+      labels:
+        app: ntm-backend
+    spec:
+      containers:
+      - name: ntm-backend
+        image: napcoredataspace.azurecr.io/ntm-backend:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:postgresql://postgres-postgresql:5432/postgres?stringtype=unspecified"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "postgres"
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "lhLIQDaJSh"
+        - name: NTM_BLOB_CONNECTIONSTRING
+          value: "DefaultEndpointsProtocol=https;AccountName=ntmdata;AccountKey=K8nTfCJ979pypvyKa0gn/cRigcNzDOajRAtXR2ql8VzTURjDXa2Y/2yva6kFSqqq2HjorfCCwwN9+AStjmCqEg==;EndpointSuffix=core.windows.net"
+

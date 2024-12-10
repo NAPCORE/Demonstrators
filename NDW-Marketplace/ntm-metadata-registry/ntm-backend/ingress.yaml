@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aks-helloworld
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - ntm-backend.d37c3234d8454420babf.westeurope.aksapp.io
+    secretName: ntm-backend-askapp-tls
+  rules:
+  - host: ntm-backend.d37c3234d8454420babf.westeurope.aksapp.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: ntm-backend
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix

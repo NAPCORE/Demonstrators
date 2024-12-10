@@ -1,0 +1,23 @@
+{
+    "@context": {
+        "odrl": "http://www.w3.org/ns/odrl/2/",
+        "edc": "https://w3id.org/edc/v0.0.1/ns/",
+        "@vocab": "https://w3id.org/edc/v0.0.1/ns/"
+    },
+    "@type": "NegotiateEdrRequestDto",
+    "connectorAddress": "{{providerUrl}}/api/v1/dsp",
+    "protocol": "dataspace-protocol-http",
+    "connectorId": "{{providerBpn}}",
+    "providerId": "{{providerBpn}}",
+    "offer": {
+        "offerId": "{{offerId}}",
+        "assetId": "urn:uuid:25692900-cfc6-b7fe-42a2-cf0df6d638d7",
+        "policy": {
+            "@type": "odrl:Set",
+            "odrl:permission": "{{contractPermissions}}",
+            "odrl:prohibition": "{{contractProhibitions}}",
+            "odrl:obligation": "{{contractObligations}}",
+            "odrl:target": "{{assetId}}"
+        }
+    }
+}
